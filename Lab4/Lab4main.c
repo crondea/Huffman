@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    printTree(tree->treeHead);
+    //printTree(tree->treeHead);
     // Compression -----------------------------------------------------------
     
 
