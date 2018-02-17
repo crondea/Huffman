@@ -59,12 +59,15 @@ int main(int argc, char *argv[])
         {
 
             listInsertSorted(list,frequencies[i],(unsigned char)i);
+            printList(list->head);
             //nodeCreate(frequencies[i],(unsigned char)i,treeHead);
         }
     }
 
+    //printList(list->head);
+    printf("\n\n");
     //printTree(tree->treeHead);
-    
+
     // Compression -----------------------------------------------------------
     
 

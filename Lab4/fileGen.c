@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
         exit(-1);
     }
 
-    int aCount = 5, xCount = 4, bCount = 4, lCount = 0, mCount = 0;
+    int aCount = 5, xCount = 4, bCount = 3, lCount = 7, mCount = 2;
     int i,k;
 
     // Writing the As

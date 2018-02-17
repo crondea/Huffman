@@ -29,6 +29,8 @@ void listInsertSorted(listRoot *treeHeader, unsigned short int frequency, unsign
     newNode->prev = NULL;
 
     listNode *currPtr = NULL;
+    printf("Adding: %d\n",frequency);
+    
 
     if(treeHeader->head == NULL)
     {
@@ -46,6 +48,7 @@ void listInsertSorted(listRoot *treeHeader, unsigned short int frequency, unsign
         {
             if(currPtr->frequency < newNode->frequency)
             {
+                // Insert in front of
                 currPtr->next = newNode;
                 newNode->next = NULL;
                 newNode->prev = currPtr;
@@ -54,6 +57,7 @@ void listInsertSorted(listRoot *treeHeader, unsigned short int frequency, unsign
             }
             else
             {
+                // Insert after
                 newNode->next = currPtr;
                 currPtr->prev = newNode;
                 currPtr->next = NULL;
@@ -66,37 +70,66 @@ void listInsertSorted(listRoot *treeHeader, unsigned short int frequency, unsign
         // Must be multiple list items
         while(currPtr != NULL)
         {
-            if(currPtr->next != NULL)
+            // If the next node exists, check if it's frequency is higher than the new node
+            // and insert it after the current node.
+            if(currPtr->frequency > newNode->frequency)
             {
-                // If the next node exists, check if it's frequency is higher than the new node
-                // and insert it after the current node.
-                if(currPtr->next->frequency > newNode->frequency)
+                if(currPtr == treeHeader->head)
                 {
-                    newNode->next = currPtr->next;
-                    newNode->prev = currPtr;
-                    currPtr->next->prev = newNode;
-                    currPtr->next = newNode;
+                    newNode->next = currPtr;
+                    newNode->prev = NULL;
+                    currPtr->prev = newNode;
+                    treeHeader->head = newNode;
                     treeHeader->listSize++;
                     return;
                 }
-            }
-            else
-            {
-                // Must be at the final node and new node must have the highest frequency
-                currPtr->next = newNode;
-                newNode->next = NULL;
-                newNode->prev = currPtr;
-                treeHeader->listSize++;
-                return;
+                else
+                {
+                    newNode->prev = currPtr->prev;
+                    newNode->next = currPtr;
+                    currPtr->prev->next = newNode;
+                    treeHeader->listSize++;
+                    return;
+                }
 
             }
+            else if(currPtr->next == NULL)
+            {
+                newNode->prev = currPtr;
+                newNode->next = NULL;
+                currPtr->next = newNode;
+                treeHeader->listSize++;
+                return;
+            }
+
             currPtr = currPtr->next;
         }
     }
 }
 
-void listRemove(listRoot *treeHeader, listNode *node)
+void listRemoveFirstTwo(listRoot *treeHeader)
 {
+    listNode *sumNode = (listNode *)malloc(sizeof(listNode));
+    sumNode->next = NULL;
+    sumNode->prev = NULL;
+    sumNode->left = NULL;
+    sumNode->right = NULL;
+    sumNode->frequency = 0;
+
+    listNode *firstNode;
+    listNode *secondNode;
+
+    // Remove first two nodes from the tree
+    if(treeHeader->listSize > 2)
+    {
+        // We will have at least one node left in the list
+
+    }
+    else if(treeHeader->listSize == 2)
+    {
+        // We will be emptying the list, then adding in the final node
+        
+    }
 
 
 }
@@ -112,7 +145,17 @@ void listDestruct(listRoot *treeHeader)
  */
 void printList(listNode *node)
 {
-    if(node->next != NULL) printList(node->next);
-    printf("(%d) %c ->",node->frequency,node->symbol);
+    if(node == NULL)
+    {
+        printf("(NULL)\n");
+        return;
+    }
+    listNode *ptr = node;
+    while(ptr != NULL)
+    {
+        printf("(%d %c)->",ptr->frequency,ptr->symbol);
+        ptr = ptr->next;
+    }
+    printf("\n");
     return;
 }
