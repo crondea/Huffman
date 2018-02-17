@@ -1,14 +1,14 @@
-// /*  Corey Rondeau and Caroline Hester
-//  *  ECE 4680 Lab 4
-//  *  File Created: Jan. 31 2018
-//  *  File Name: tree.c
-//  * 
-//  */
+/*  Corey Rondeau and Caroline Hester
+ *  ECE 4680 Lab 4
+ *  File Created: Jan. 31 2018
+ *  File Name: tree.c
+ * 
+ */
 
-// #include <stdio.h>
-// #include <stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-// #include "functions.h"
+#include "functions.h"
 
 
 // treeRoot *treeConstruct()
@@ -56,17 +56,17 @@
 
 // }
 
-// unsigned short int findFrequencies(unsigned char *data, int size, int index)
-// {
-//     int count = 0;
-//     int i;
+unsigned short int findFrequencies(unsigned char *data, int size, int index)
+{
+    int count = 0;
+    int i;
 
-//     for(i = 0; i < size; i++)
-//     {
-//         if((int)data[i] == index) count++;
-//     }
-//     return count;
-// }
+    for(i = 0; i < size; i++)
+    {
+        if((int)data[i] == index) count++;
+    }
+    return count;
+}
 
 // void nodeCreate(unsigned short int frequency, unsigned char symbol, treeRoot *head)
 // {

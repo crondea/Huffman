@@ -50,6 +50,7 @@ void listInsertSorted(listRoot *treeHeader, unsigned short int frequency, unsign
                 newNode->next = NULL;
                 newNode->prev = currPtr;
                 treeHeader->listSize++;
+                return;
             }
             else
             {
@@ -58,23 +59,39 @@ void listInsertSorted(listRoot *treeHeader, unsigned short int frequency, unsign
                 currPtr->next = NULL;
                 treeHeader->head = newNode;
                 treeHeader->listSize++;
+                return;
             }
         }
 
         // Must be multiple list items
         while(currPtr != NULL)
         {
-            if(currPtr->next == NULL)
+            if(currPtr->next != NULL)
             {
+                // If the next node exists, check if it's frequency is higher than the new node
+                // and insert it after the current node.
+                if(currPtr->next->frequency > newNode->frequency)
+                {
+                    newNode->next = currPtr->next;
+                    newNode->prev = currPtr;
+                    currPtr->next->prev = newNode;
+                    currPtr->next = newNode;
+                    treeHeader->listSize++;
+                    return;
+                }
+            }
+            else
+            {
+                // Must be at the final node and new node must have the highest frequency
+                currPtr->next = newNode;
+                newNode->next = NULL;
+                newNode->prev = currPtr;
+                treeHeader->listSize++;
+                return;
 
             }
-
-
-
             currPtr = currPtr->next;
         }
-
-
     }
 }
 
