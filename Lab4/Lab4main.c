@@ -57,13 +57,27 @@ int main(int argc, char *argv[])
         frequencies[i] = findFrequencies(fileData,fileSize,i);
         if(frequencies[i] > 0)
         {
-
-            listInsertSorted(list,frequencies[i],(unsigned char)i);
+            listNode *node = (listNode *)malloc(sizeof(listNode));
+            node->left = NULL;
+            node->right = NULL;
+            node->frequency = frequencies[i];
+            node->symbol = (unsigned char)i;
+            listInsertSorted(list,node);
             printList(list->head);
             //nodeCreate(frequencies[i],(unsigned char)i,treeHead);
         }
     }
+    combineFirstTwo(list);
+    printList(list->head);
 
+    combineFirstTwo(list);
+    printList(list->head);
+
+    combineFirstTwo(list);
+    printList(list->head);
+
+    combineFirstTwo(list);
+    printList(list->head);
     //printList(list->head);
     printf("\n\n");
     //printTree(tree->treeHead);

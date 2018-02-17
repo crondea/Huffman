@@ -24,7 +24,7 @@ typedef struct listRootTag
 } listRoot;
 
 listRoot *listConstruct();
-void listInsertSorted(listRoot *treeHeader, unsigned short int frequency, unsigned char symbol);
+void listInsertSorted(listRoot *treeHeader, listNode *newNode);
 void combineFirstTwo(listRoot *treeHeader);
 listNode *listRemove(listRoot *treeHeader);
 void listDestruct(listRoot *treeHeader);

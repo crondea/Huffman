@@ -20,16 +20,11 @@ listRoot *listConstruct()
     return listPtr;
 }
 
-void listInsertSorted(listRoot *treeHeader, unsigned short int frequency, unsigned char symbol)
+void listInsertSorted(listRoot *treeHeader, listNode *newNode)
 {
-    listNode *newNode = (listNode *)malloc(sizeof(listNode));
-    newNode->frequency = frequency;
-    newNode->symbol = symbol;
-    newNode->next = NULL;
-    newNode->prev = NULL;
 
     listNode *currPtr = NULL;
-    printf("Adding: %d\n",frequency);
+    //printf("Adding: %d\n",newNode->frequency);
     
 
     if(treeHeader->head == NULL)
@@ -130,12 +125,12 @@ void combineFirstTwo(listRoot *treeHeader)
         sumNode->frequency = (firstNode->frequency) + (secondNode->frequency);
         sumNode->left = firstNode;
         sumNode->right = secondNode;
-        //listInsertSorted(treeHeader,);
+        listInsertSorted(treeHeader,sumNode);
     }
     else if(treeHeader->listSize == 2)
     {
         // We will be emptying the list, then adding in the final node
-
+        
     }
 
 
