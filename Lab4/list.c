@@ -107,7 +107,7 @@ void listInsertSorted(listRoot *treeHeader, unsigned short int frequency, unsign
     }
 }
 
-void listRemoveFirstTwo(listRoot *treeHeader)
+void combineFirstTwo(listRoot *treeHeader)
 {
     listNode *sumNode = (listNode *)malloc(sizeof(listNode));
     sumNode->next = NULL;
@@ -115,23 +115,40 @@ void listRemoveFirstTwo(listRoot *treeHeader)
     sumNode->left = NULL;
     sumNode->right = NULL;
     sumNode->frequency = 0;
+    sumNode->symbol = '\0';
 
     listNode *firstNode;
     listNode *secondNode;
+    //listNode *rover = treeHeader->head;
 
     // Remove first two nodes from the tree
     if(treeHeader->listSize > 2)
     {
         // We will have at least one node left in the list
-
+        firstNode = listRemove(treeHeader);
+        secondNode = listRemove(treeHeader);
+        sumNode->frequency = (firstNode->frequency) + (secondNode->frequency);
+        sumNode->left = firstNode;
+        sumNode->right = secondNode;
+        //listInsertSorted(treeHeader,);
     }
     else if(treeHeader->listSize == 2)
     {
         // We will be emptying the list, then adding in the final node
-        
+
     }
 
 
+}
+
+listNode *listRemove(listRoot *treeHeader)
+{
+    listNode *removedNode = treeHeader->head;
+    
+    treeHeader->head = removedNode->next;
+    treeHeader->head->prev = NULL;
+    treeHeader->listSize--;
+    return removedNode;
 }
 
 void listDestruct(listRoot *treeHeader)
