@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "functions.h"
 
@@ -186,17 +187,25 @@ void printTreeAux(listNode *node, int level)
 }
 
 
-void printCode(listNode *node, int level, int code)
+void printCode(listNode *node, int level, int binary, char*code)
 {
     int i;
     if(node == NULL) return;
-    printCode(node->right,level+1,1);
+    code = (char *)realloc(code,(level+2)*sizeof(char));
+    printCode(node->right,level+1,1,strcat(code,"1"));
     for(i = 0; i < level; i++) printf("    ");
     if(level != 0)
     {
         //printf("(%d %c)\n",node->frequency,node->symbol);
-        printf("%d\n",code);
+        printf("%d\n",binary);
     }
-    printCode(node->left,level+1,0);
-    
+    char *newcode;
+    newcode = (char *)calloc(1,(level+2)*sizeof(char));
+    free(code);
+    code = newcode;
+    printCode(node->left,level+1,0,strcat(code,"0"));
+    if (node->symbol)
+    {
+        printf("%c: %s\n",node->symbol,code);
+    }
 }

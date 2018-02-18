@@ -31,7 +31,7 @@ void treeDestruct(listRoot *treeHeader);
 void printList(listNode *node);
 void printTree(listRoot *tree);
 void printTreeAux(listNode *node, int level);
-void printCode(listNode *node, int level, int code);
+void printCode(listNode *node, int level, int binary, char*code);
 
 
 
