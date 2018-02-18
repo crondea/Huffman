@@ -82,6 +82,66 @@ int main(int argc, char *argv[])
         printf("fwrite failed!\n");
     }
 
+
+
+
+    int qCount = 5, wCount = 4, eCount = 3, rCount = 7, tCount = 2;
+
+    // Writing the As
+    k = 0;
+    for(i = 0; i < qCount; i++)
+    {
+        k = fwrite("Q",sizeof(unsigned char),1,ofptr);
+    }
+    if(k == 0)
+    {
+        printf("fwrite failed!\n");
+    }
+
+    // Writing the Xs
+    k = 0;
+    for(i = 0; i < wCount; i++)
+    {
+        k = fwrite("W",sizeof(unsigned char),1,ofptr);
+    }
+    if(k == 0)
+    {
+        printf("fwrite failed!\n");
+    }
+
+    // Writing the Bs
+    k = 0;
+    for(i = 0; i < eCount; i++)
+    {
+        k = fwrite("E",sizeof(unsigned char),1,ofptr);
+    }
+    if(k == 0)
+    {
+        printf("fwrite failed!\n");
+    }
+
+    // Writing the Ls
+    k = 0;
+    for(i = 0; i < rCount; i++)
+    {
+        k = fwrite("R",sizeof(unsigned char),1,ofptr);
+    }
+    if(k == 0)
+    {
+        printf("fwrite failed!\n");
+    }
+
+    // Writing the Ms
+    k = 0;
+    for(i = 0; i < tCount; i++)
+    {
+        k = fwrite("T",sizeof(unsigned char),1,ofptr);
+    }
+    if(k == 0)
+    {
+        printf("fwrite failed!\n");
+    }
+
     fclose(ofptr);
 
     return 0;

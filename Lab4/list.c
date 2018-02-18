@@ -83,10 +83,10 @@ void listInsertSorted(listRoot *treeHeader, listNode *newNode)
                     newNode->prev = currPtr->prev;
                     newNode->next = currPtr;
                     currPtr->prev->next = newNode;
+                    currPtr->prev = newNode;
                     treeHeader->listSize++;
                     return;
                 }
-
             }
             else if(currPtr->next == NULL)
             {
@@ -166,4 +166,21 @@ void printList(listNode *node)
     }
     printf("\n");
     return;
+}
+
+
+void printTree(listRoot *tree)
+{
+    printTreeAux(tree->head,0);
+}
+
+void printTreeAux(listNode *node, int level)
+{
+    int i;
+    if(node == NULL) return;
+    printTreeAux(node->right,level+1);
+    for(i = 0; i < level; i++) printf("        ");
+    printf("(%d %c)\n",node->frequency,node->symbol);
+    printTreeAux(node->left,level+1);
+    
 }

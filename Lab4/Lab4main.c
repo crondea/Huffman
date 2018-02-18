@@ -67,20 +67,14 @@ int main(int argc, char *argv[])
             //nodeCreate(frequencies[i],(unsigned char)i,treeHead);
         }
     }
-    combineFirstTwo(list);
-    printList(list->head);
+    while(list->listSize > 1)
+    {
+        combineFirstTwo(list);
+        printList(list->head);
+    }
 
-    combineFirstTwo(list);
-    printList(list->head);
-
-    combineFirstTwo(list);
-    printList(list->head);
-
-    combineFirstTwo(list);
-    printList(list->head);
-    //printList(list->head);
     printf("\n\n");
-    //printTree(tree->treeHead);
+    printTree(list);
 
     // Compression -----------------------------------------------------------
     

@@ -29,6 +29,8 @@ void combineFirstTwo(listRoot *treeHeader);
 listNode *listRemove(listRoot *treeHeader);
 void treeDestruct(listRoot *treeHeader);
 void printList(listNode *node);
+void printTree(listRoot *tree);
+void printTreeAux(listNode *node, int level);
 
 
 // Below are the structure definitions as well as the function definitions
