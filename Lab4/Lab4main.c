@@ -76,6 +76,8 @@ int main(int argc, char *argv[])
     printf("\n\n");
     printTree(list);
 
+    printCode(list->head,0,0);
+    printf("\n\n");
     // Compression -----------------------------------------------------------
     
 

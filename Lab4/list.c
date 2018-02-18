@@ -184,3 +184,19 @@ void printTreeAux(listNode *node, int level)
     printTreeAux(node->left,level+1);
     
 }
+
+
+void printCode(listNode *node, int level, int code)
+{
+    int i;
+    if(node == NULL) return;
+    printCode(node->right,level+1,1);
+    for(i = 0; i < level; i++) printf("    ");
+    if(level != 0)
+    {
+        //printf("(%d %c)\n",node->frequency,node->symbol);
+        printf("%d\n",code);
+    }
+    printCode(node->left,level+1,0);
+    
+}
