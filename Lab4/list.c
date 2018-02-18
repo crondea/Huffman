@@ -117,21 +117,13 @@ void combineFirstTwo(listRoot *treeHeader)
     //listNode *rover = treeHeader->head;
 
     // Remove first two nodes from the tree
-    if(treeHeader->listSize > 2)
-    {
-        // We will have at least one node left in the list
-        firstNode = listRemove(treeHeader);
-        secondNode = listRemove(treeHeader);
-        sumNode->frequency = (firstNode->frequency) + (secondNode->frequency);
-        sumNode->left = firstNode;
-        sumNode->right = secondNode;
-        listInsertSorted(treeHeader,sumNode);
-    }
-    else if(treeHeader->listSize == 2)
-    {
-        // We will be emptying the list, then adding in the final node
-        
-    }
+    // We will have at least one node left in the list
+    firstNode = listRemove(treeHeader);
+    secondNode = listRemove(treeHeader);
+    sumNode->frequency = (firstNode->frequency) + (secondNode->frequency);
+    sumNode->left = firstNode;
+    sumNode->right = secondNode;
+    listInsertSorted(treeHeader,sumNode);
 
 
 }
@@ -139,14 +131,18 @@ void combineFirstTwo(listRoot *treeHeader)
 listNode *listRemove(listRoot *treeHeader)
 {
     listNode *removedNode = treeHeader->head;
-    
+    removedNode->prev = NULL;
     treeHeader->head = removedNode->next;
-    treeHeader->head->prev = NULL;
     treeHeader->listSize--;
+    removedNode->next = NULL;
+    if(treeHeader->listSize == 0)
+    {
+        treeHeader->head = NULL;
+    }
     return removedNode;
 }
 
-void listDestruct(listRoot *treeHeader)
+void treeDestruct(listRoot *treeHeader)
 {
 
 

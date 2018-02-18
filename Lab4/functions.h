@@ -27,7 +27,7 @@ listRoot *listConstruct();
 void listInsertSorted(listRoot *treeHeader, listNode *newNode);
 void combineFirstTwo(listRoot *treeHeader);
 listNode *listRemove(listRoot *treeHeader);
-void listDestruct(listRoot *treeHeader);
+void treeDestruct(listRoot *treeHeader);
 void printList(listNode *node);
 
 
