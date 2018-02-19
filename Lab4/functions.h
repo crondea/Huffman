@@ -13,6 +13,7 @@ typedef struct listNodeTag
     struct listNodeTag *next;
     struct listNodeTag *left;
     struct listNodeTag *right;
+    struct listNodeTag *parent;
     unsigned short int frequency;
     unsigned char symbol;
 } listNode;

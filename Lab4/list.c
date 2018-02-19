@@ -21,6 +21,7 @@ listRoot *listConstruct()
     return listPtr;
 }
 
+
 void listInsertSorted(listRoot *treeHeader, listNode *newNode)
 {
 
@@ -103,6 +104,7 @@ void listInsertSorted(listRoot *treeHeader, listNode *newNode)
     }
 }
 
+
 void combineFirstTwo(listRoot *treeHeader)
 {
     listNode *sumNode = (listNode *)malloc(sizeof(listNode));
@@ -115,7 +117,6 @@ void combineFirstTwo(listRoot *treeHeader)
 
     listNode *firstNode;
     listNode *secondNode;
-    //listNode *rover = treeHeader->head;
 
     // Remove first two nodes from the tree
     // We will have at least one node left in the list
@@ -124,10 +125,11 @@ void combineFirstTwo(listRoot *treeHeader)
     sumNode->frequency = (firstNode->frequency) + (secondNode->frequency);
     sumNode->left = firstNode;
     sumNode->right = secondNode;
+    firstNode->parent = sumNode;
+    secondNode->parent = sumNode;
     listInsertSorted(treeHeader,sumNode);
-
-
 }
+
 
 listNode *listRemove(listRoot *treeHeader)
 {
@@ -174,6 +176,7 @@ void printTree(listRoot *tree)
 {
     printTreeAux(tree->head,0);
 }
+
 
 void printTreeAux(listNode *node, int level)
 {

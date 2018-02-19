@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
     printf("\n\n");
     printTree(list);
     char *code = (char *) calloc(1,sizeof(char));
-    printCode(list->head,0,0,code);
+    //printCode(list->head,0,0,code);
     printf("\n\n");
     // Compression -----------------------------------------------------------
     
