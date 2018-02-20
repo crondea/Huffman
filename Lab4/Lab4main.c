@@ -20,7 +20,6 @@ int main(int argc, char *argv[])
     int i, count;
 
     // This will be a pointer to the head of the tree
-    //treeRoot *tree = treeConstruct();
     listRoot *list = listConstruct();
 
     // Array to store character frequencies
@@ -60,7 +59,7 @@ int main(int argc, char *argv[])
         if(count > 0)
         {
             freqAndCodes[i] = (unsigned char *)calloc(1,50*sizeof(unsigned char));
-            freqAndCodes[i][0] = findFrequencies(fileData,fileSize,i);
+            freqAndCodes[i][0] = count;
 
             listNode *node = (listNode *)malloc(sizeof(listNode));
             node->left = NULL;
