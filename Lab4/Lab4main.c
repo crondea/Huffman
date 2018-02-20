@@ -46,6 +46,7 @@ int main(int argc, char *argv[])
     fileSize = ftell(inptr1);
     rewind(inptr1);
 
+    // Allocating for the amount of the data in the file, then storing the file data
     unsigned char *fileData = (unsigned char *)calloc(1,fileSize*sizeof(unsigned char));
     fread(fileData,sizeof(unsigned char),fileSize,inptr1);
 
@@ -70,18 +71,6 @@ int main(int argc, char *argv[])
             listInsertSorted(list,node);
             printList(list->head);
         }
-
-        // if(frequencies[i] > 0)
-        // {
-        //     listNode *node = (listNode *)malloc(sizeof(listNode));
-        //     node->left = NULL;
-        //     node->right = NULL;
-        //     node->frequency = frequencies[i];
-        //     node->symbol = (unsigned char)i;
-        //     listInsertSorted(list,node);
-        //     printList(list->head);
-        //     //nodeCreate(frequencies[i],(unsigned char)i,treeHead);
-        // }
     }
     // Turn the list into the Huffman tree
     while(list->listSize > 1)
