@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 
     // Array to store character frequencies
     unsigned short int frequencies[256];
-    unsigned char *freqAndCodes[256];
+    unsigned char *codes[256];
     for(i = 0; i < 255; i++)
     {
         frequencies[i] = 0;
@@ -54,17 +54,15 @@ int main(int argc, char *argv[])
     // We also need to allocate a new node for every entry in the frequencies array that is > 0
     for(i = 0; i < 255; i++)
     {
-        //frequencies[i] = findFrequencies(fileData,fileSize,i);
+        codes[i] = NULL;
         count = findFrequencies(fileData,fileSize,i);
         if(count > 0)
         {
-            freqAndCodes[i] = (unsigned char *)calloc(1,50*sizeof(unsigned char));
-            freqAndCodes[i][0] = count;
-
+            frequencies[i] = count;
             listNode *node = (listNode *)malloc(sizeof(listNode));
             node->left = NULL;
             node->right = NULL;
-            node->frequency = freqAndCodes[i][0];
+            node->frequency = count;
             node->symbol = (unsigned char)i;
             listInsertSorted(list,node);
             printList(list->head);
