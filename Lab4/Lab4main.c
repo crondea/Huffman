@@ -62,7 +62,10 @@ int main(int argc, char *argv[])
             listNode *node = (listNode *)malloc(sizeof(listNode));
             node->left = NULL;
             node->right = NULL;
-            node->frequency = count;
+            node->parent = NULL;
+            node->next = NULL;
+            node->prev = NULL;
+            node->frequency = frequencies[i];
             node->symbol = (unsigned char)i;
             listInsertSorted(list,node);
             printList(list->head);
@@ -89,9 +92,10 @@ int main(int argc, char *argv[])
 
     printf("\n\n");
     printTree(list);
-    char *code = (char *) calloc(1,sizeof(char));
-    //printCode(list->head,0,0,code);
+    i = 65;
+    codes[i] = findLeaf(list->head,0,codes[i]);
     printf("\n\n");
+    printf("A: %s\n",codes[i]);
     // Compression -----------------------------------------------------------
     
 

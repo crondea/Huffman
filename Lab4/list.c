@@ -131,6 +131,7 @@ void combineFirstTwo(listRoot *treeHeader)
     sumNode->prev = NULL;
     sumNode->left = NULL;
     sumNode->right = NULL;
+    sumNode->parent = NULL;
     sumNode->frequency = 0;
     sumNode->symbol = '\0';
     // Initializing pointers to the nodes we are removing from the list
@@ -254,27 +255,52 @@ void printCode(listNode *node, int level, int binary, char*code)
     }
 }
 
-void findCode(listNode *node, int level, int binary, char*code)
+void findLeaf(listNode *node, int level, unsigned char *code)
 {
-    int i;
-    if(node == NULL) return;
-    code = (char *)realloc(code,(level+2)*sizeof(char));
-    printCode(node->right,level+1,1,strcat(code,"1"));
-    for(i = 0; i < level; i++) printf("    ");
-    if(level != 0)
+    if(node->symbol)
     {
-        //printf("(%d %c)\n",node->frequency,node->symbol);
-        printf("%d\n",binary);
+        findCode(node,level,code);
+        printf("code: %s\n",code);
+        return;
     }
-    char *newcode;
-    newcode = (char *)calloc(1,(level+2)*sizeof(char));
-    free(code);
-    code = newcode;
-    printCode(node->left,level+1,0,strcat(code,"0"));
-    if (node->symbol)
+
+    findLeaf(node->right,level+1,code);
+    findLeaf(node->left,level+1,code);
+
+}
+
+void findCode(listNode *node, int level, unsigned char *code)
+{
+    if(node->symbol)
     {
-        printf("%c: %s\n",node->symbol,code);
+        int i;
+        listNode *parent, *current;
+
+        code = (unsigned char *)calloc(1,(level+1)*sizeof(unsigned char));
+        current = node;
+        for(i = level-1;i>=0;i--)
+        {
+            parent = current->parent;
+            if (parent != NULL)
+            {
+                if (parent->right == current)
+                {
+                    code[i] = '1';
+                    printf("%c",code[i]);
+                }
+                else 
+                {
+                    code[i] = '0';
+                    printf("%c",code[i]);
+                }
+            }
+            printf("\n");
+            printf("c:%s\n",code);
+            current = current->parent;
+        }
     }
+
+
 }
 
 /*  The purpose of this function is to cycle through the array containing the file data

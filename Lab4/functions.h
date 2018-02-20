@@ -34,7 +34,8 @@ void printTree(listRoot *tree);
 void printTreeAux(listNode *node, int level);
 void printCode(listNode *node, int level, int binary, char*code);
 unsigned short int findFrequencies(unsigned char *data, int size ,int index);
-void findCode(listNode *node, int level, int binary, char*code);
+void findLeaf(listNode *node, int level, unsigned char *code);
+void findCode(listNode *node, int level, unsigned char *code);
 
 
 
