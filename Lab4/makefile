@@ -1,6 +1,6 @@
 # Corey Rondeau
 # ECE 4680 Lab 4
-# Feb. 1, 2018
+# Feb. 13, 2018
 #
 # The purpose of this file is to build my solution including helper programs as well as the 
 # main compression file. For submission, the helper programs will be commented out.

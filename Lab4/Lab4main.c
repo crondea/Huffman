@@ -1,7 +1,7 @@
 /*  Corey Rondeau and Caroline Hester
- *  ECE 4680 Lab 3
- *  File Created: Jan. 31 2018
- *  File Name: fileGen.c
+ *  ECE 4680 Lab 4
+ *  File Created: Feb. 13 2018
+ *  File Name: Lab4main.c
  * 
  */
 
@@ -61,7 +61,6 @@ int main(int argc, char *argv[])
         {
             freqAndCodes[i] = (unsigned char *)calloc(1,50*sizeof(unsigned char));
             freqAndCodes[i][0] = findFrequencies(fileData,fileSize,i);
-            printf("i: %d\n",freqAndCodes[i][0]);
 
             listNode *node = (listNode *)malloc(sizeof(listNode));
             node->left = NULL;
@@ -84,6 +83,7 @@ int main(int argc, char *argv[])
         //     //nodeCreate(frequencies[i],(unsigned char)i,treeHead);
         // }
     }
+    // Turn the list into the Huffman tree
     while(list->listSize > 1)
     {
         combineFirstTwo(list);

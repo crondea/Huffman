@@ -1,7 +1,7 @@
 /*  Corey Rondeau and Caroline Hester
  *  ECE 4680 Lab 4
- *  File Created: Jan. 31 2018
- *  File Name: binaryTree.c
+ *  File Created: Feb. 13 2018
+ *  File Name: functions.h
  * 
  */
 
