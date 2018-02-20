@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     FILE *outptr1 = NULL;
     //FILE *outptr2 = NULL;
     int fileSize;
-    int i;
+    int i, count;
 
     // This will be a pointer to the head of the tree
     //treeRoot *tree = treeConstruct();
@@ -25,6 +25,7 @@ int main(int argc, char *argv[])
 
     // Array to store character frequencies
     unsigned short int frequencies[256];
+    unsigned char *freqAndCodes[256];
     for(i = 0; i < 255; i++)
     {
         frequencies[i] = 0;
@@ -54,18 +55,34 @@ int main(int argc, char *argv[])
     // We also need to allocate a new node for every entry in the frequencies array that is > 0
     for(i = 0; i < 255; i++)
     {
-        frequencies[i] = findFrequencies(fileData,fileSize,i);
-        if(frequencies[i] > 0)
+        //frequencies[i] = findFrequencies(fileData,fileSize,i);
+        count = findFrequencies(fileData,fileSize,i);
+        if(count > 0)
         {
+            freqAndCodes[i] = (unsigned char *)calloc(1,50*sizeof(unsigned char));
+            freqAndCodes[i][0] = findFrequencies(fileData,fileSize,i);
+            printf("i: %d\n",freqAndCodes[i][0]);
+
             listNode *node = (listNode *)malloc(sizeof(listNode));
             node->left = NULL;
             node->right = NULL;
-            node->frequency = frequencies[i];
+            node->frequency = freqAndCodes[i][0];
             node->symbol = (unsigned char)i;
             listInsertSorted(list,node);
             printList(list->head);
-            //nodeCreate(frequencies[i],(unsigned char)i,treeHead);
         }
+
+        // if(frequencies[i] > 0)
+        // {
+        //     listNode *node = (listNode *)malloc(sizeof(listNode));
+        //     node->left = NULL;
+        //     node->right = NULL;
+        //     node->frequency = frequencies[i];
+        //     node->symbol = (unsigned char)i;
+        //     listInsertSorted(list,node);
+        //     printList(list->head);
+        //     //nodeCreate(frequencies[i],(unsigned char)i,treeHead);
+        // }
     }
     while(list->listSize > 1)
     {

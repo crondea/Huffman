@@ -13,8 +13,8 @@ OBJECTS = prog filegen
 
 all: $(OBJECTS)
 
-prog: Lab4main.c tree.c list.c
-	$(comp) $(comp_flags) list.c tree.c Lab4main.c -o prog
+prog: Lab4main.c list.c
+	$(comp) $(comp_flags) list.c Lab4main.c -o prog
 
 filegen: fileGen.c
 	$(comp) $(comp_flags) fileGen.c -o filegen

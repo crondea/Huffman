@@ -212,3 +212,16 @@ void printCode(listNode *node, int level, int binary, char*code)
         printf("%c: %s\n",node->symbol,code);
     }
 }
+
+
+unsigned short int findFrequencies(unsigned char *data, int size, int index)
+{
+    int count = 0;
+    int i;
+
+    for(i = 0; i < size; i++)
+    {
+        if((int)data[i] == index) count++;
+    }
+    return count;
+}

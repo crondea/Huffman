@@ -33,6 +33,7 @@ void printList(listNode *node);
 void printTree(listRoot *tree);
 void printTreeAux(listNode *node, int level);
 void printCode(listNode *node, int level, int binary, char*code);
+unsigned short int findFrequencies(unsigned char *data, int size ,int index);
 
 
 
@@ -58,7 +59,6 @@ void printCode(listNode *node, int level, int binary, char*code);
 // void insertTree(treeRoot *head, treeNode *newNode);
 // void removeTree(treeRoot *head);
 // void freeTree(treeRoot *head);
-unsigned short int findFrequencies(unsigned char *data, int size ,int index);
 // void nodeCreate(unsigned short int frequency, unsigned char symbol, treeRoot *head);
 // void printTree(treeNode *head);
 // void printTreeAux(treeNode *currNode);
