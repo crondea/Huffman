@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
     printf("\n\n");
     printTree(list);
     i = 65;
-    codes[i] = findLeaf(list->head,0,codes[i]);
+    findLeaf(list->head,0,codes[i]);
     printf("\n\n");
     printf("A: %s\n",codes[i]);
     // Compression -----------------------------------------------------------
