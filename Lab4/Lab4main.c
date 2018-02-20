@@ -21,7 +21,6 @@ int main(int argc, char *argv[])
 
     // This will be a pointer to the head of the tree
     listRoot *list = listConstruct();
-    //yo
 
     // Array to store character frequencies
     unsigned short int frequencies[256];
