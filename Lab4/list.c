@@ -255,48 +255,51 @@ void printTreeAux(listNode *node, int level)
 //     }
 // }
 
-void findLeaf(listNode *node, int level, unsigned char **code, unsigned char symbol)
+void findLeaf(listNode *node, int level, unsigned short int *code, unsigned char symbol, unsigned short int *lengths)
 {
     if (node)
     {
         if(node->symbol == symbol && node->left == NULL)
         {
-            findCode(node,level,code);
+            findCode(node,level,code,symbol,lengths);
             //printf("code: %s\n",*code);
             return;
         }
     }
     if (node)
     {
-        findLeaf(node->right,level+1,code,symbol);
-        findLeaf(node->left,level+1,code,symbol);
+        findLeaf(node->right,level+1,code,symbol,lengths);
+        findLeaf(node->left,level+1,code,symbol,lengths);
     }
     
 
 }
 
-void findCode(listNode *node, int level, unsigned char **code)
+void findCode(listNode *node, int level, unsigned short int *code, unsigned char symbol, unsigned short int *lengths)
 {
     //if(node->symbol)
     //{
         int i;
         listNode *parent, *current;
 
-        *code = (unsigned char *)calloc(1,(level+1)*sizeof(unsigned char));
+        //*code = (unsigned char *)calloc(1,(level+1)*sizeof(unsigned char));
         current = node;
-        for(i = level-1;i>=0;i--)
+        *lengths = level;
+        for(i = 0;i<=level-1;i++) // changed from i=level-1;i>=0;i--
         {
             parent = current->parent;
             if (parent != NULL)
             {
                 if (parent->right == current)
                 {
-                    code[0][i] = '1';
+                    *code |= 0x01 << i;
+                    //code[0][i] = '1';
                     //printf("%c",code[0][i]);
                 }
                 else 
                 {
-                    code[0][i] = '0';
+                    *code |= 0x00 << i;
+                    //code[0][i] = '0';
                     //printf("%c",code[0][i]);
                 }
             }
