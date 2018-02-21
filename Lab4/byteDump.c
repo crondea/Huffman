@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     FILE *ifptr = NULL;
     int i;
     int fSize;
-    unsigned short int byte;
+    unsigned char byte;
     //unsigned char byteSize;
 
     if(argc != 2)
@@ -31,14 +31,14 @@ int main(int argc, char *argv[])
     }
 
     fseek(ifptr, 0, SEEK_END);
-    fSize = (ftell(ifptr))/2;
+    fSize = ftell(ifptr);
     rewind(ifptr);
 
     printf("File size: %d\n", fSize);
     for(i = 0; i < fSize; i++)
     {
-        fread(&byte,sizeof(unsigned short int),1,ifptr);
-        printf("%d (%c)\n",byte,byte);
+        fread(&byte,sizeof(unsigned char),1,ifptr);
+        printf("%X \n",byte);
     }
 
     return 0;

@@ -5,10 +5,6 @@
  * 
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "functions.h"
 
 int main(int argc, char *argv[])
@@ -16,12 +12,18 @@ int main(int argc, char *argv[])
     FILE *inptr1 = NULL;
     //FILE *inptr2 = NULL;
     FILE *outptr1 = NULL;
-    //FILE *outptr2 = NULL;
+    FILE *outptr2 = NULL;
     int fileSize;
     int i, count;
 
     // This will be a pointer to the head of the tree
     listRoot *list = listConstruct();
+
+    // This will be our buffer for writing the codes to the compressed file
+    unsigned char buffer = 0;
+    // Position in buffer set initially to max
+    int bufferIndex = 7;
+
 
     // Array to store character frequencies
     unsigned short int frequencies[256];
@@ -39,6 +41,11 @@ int main(int argc, char *argv[])
     if(!(outptr1 = fopen("compressed","wb")))
     {
         printf("Error opening compression output file\n");
+        exit(-1);
+    }
+    if(!(outptr2 = fopen("Broke_compressed","wb")))
+    {
+        printf("Error opening broke output file\n");
         exit(-1);
     }
 
@@ -94,11 +101,58 @@ int main(int argc, char *argv[])
 
     
     // Compression -----------------------------------------------------------
-
-    for (i=0;i<fileSize;i++)
+    unsigned char fileChar = 0;
+    unsigned char *code;
+    unsigned char *extraBits;
+    int codeLen, bitsLen;
+    for (i = 0; i < fileSize; i++)
     {
-        fwrite(codes[fileData[i]],strlen((const char *)codes[fileData[i]])*sizeof(unsigned char),1,outptr1);
+        fwrite(codes[fileData[i]],strlen((const char *)codes[fileData[i]])*sizeof(unsigned char),1,outptr2);
+        fileChar = fileData[i];
+        codeLen = strlen((const char *)codes[fileChar]);
+        code = (unsigned char *)calloc(1,codeLen);
+        code = (unsigned char *)strcpy((char *)code,(char *)codes[fileChar]);
+        //printf("%s, %X\n",codes[fileChar],(unsigned int)*codes[fileChar]);
+
+        if(bufferIndex >= codeLen - 1)
+        {
+            //printf("%d\n",atoi((char *)code));
+            *code = *code << ((bufferIndex - codeLen) + 1);
+            //printf("%X\n\n",*code);
+            buffer |= *code;
+            bufferIndex -= codeLen;
+
+            // if the buffer is full, write, reset
+            if(bufferIndex == -1)
+            {
+                fwrite(&buffer,sizeof(unsigned char),1,outptr1);
+                buffer = 0;
+                bufferIndex = 7;
+            }
+        }
+        else
+        {
+            // save what we can in the buffer
+            extraBits = (unsigned char *)calloc(1,codeLen);
+            extraBits = (unsigned char *)strcpy((char *)extraBits,(char *)codes[fileChar]);
+            bitsLen = bufferIndex + 1;
+            // get the bits that we can't fit
+            *extraBits = *extraBits >> (codeLen - bitsLen);
+            buffer |= *extraBits;
+            // write the full buffer
+            fwrite(&buffer,sizeof(unsigned char),1,outptr1);
+            // reset buffer
+            buffer = 0;
+            bufferIndex = 7;
+            // add remaining bits to the buffer
+            free(extraBits);
+            buffer |= *code << ((bufferIndex + 1) - (codeLen - bitsLen));
+            bufferIndex -= codeLen - bitsLen;
+        }
+        
+        free(code);
     }    
+    fwrite(&buffer,sizeof(unsigned char),1,outptr1);
 
     // Decompression ---------------------------------------------------------
 

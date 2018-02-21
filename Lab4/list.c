@@ -232,28 +232,28 @@ void printTreeAux(listNode *node, int level)
 }
 
 
-void printCode(listNode *node, int level, int binary, char*code)
-{
-    int i;
-    if(node == NULL) return;
-    code = (char *)realloc(code,(level+2)*sizeof(char));
-    printCode(node->right,level+1,1,strcat(code,"1"));
-    for(i = 0; i < level; i++) printf("    ");
-    if(level != 0)
-    {
-        //printf("(%d %c)\n",node->frequency,node->symbol);
-        printf("%d\n",binary);
-    }
-    char *newcode;
-    newcode = (char *)calloc(1,(level+2)*sizeof(char));
-    free(code);
-    code = newcode;
-    printCode(node->left,level+1,0,strcat(code,"0"));
-    if (node->symbol)
-    {
-        printf("%c: %s\n",node->symbol,code);
-    }
-}
+// void printCode(listNode *node, int level, int binary, char*code)
+// {
+//     int i;
+//     if(node == NULL) return;
+//     code = (char *)realloc(code,(level+2)*sizeof(char));
+//     printCode(node->right,level+1,1,strcat(code,"1"));
+//     for(i = 0; i < level; i++) printf("    ");
+//     if(level != 0)
+//     {
+//         //printf("(%d %c)\n",node->frequency,node->symbol);
+//         printf("%d\n",binary);
+//     }
+//     char *newcode;
+//     newcode = (char *)calloc(1,(level+2)*sizeof(char));
+//     free(code);
+//     code = newcode;
+//     printCode(node->left,level+1,0,strcat(code,"0"));
+//     if (node->symbol)
+//     {
+//         printf("%c: %s\n",node->symbol,code);
+//     }
+// }
 
 void findLeaf(listNode *node, int level, unsigned char **code, unsigned char symbol)
 {

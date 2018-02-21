@@ -25,25 +25,27 @@ int main(int argc, char *argv[])
     }
     int k;
     k = fwrite("A",sizeof(unsigned char),1,ofptr);
-    k = fwrite(" ",sizeof(unsigned char),1,ofptr);
-    k = fwrite("R",sizeof(unsigned char),1,ofptr);
-    k = fwrite("A",sizeof(unsigned char),1,ofptr);
-    k = fwrite("T",sizeof(unsigned char),1,ofptr);
-    k = fwrite(" ",sizeof(unsigned char),1,ofptr);
-    k = fwrite("S",sizeof(unsigned char),1,ofptr);
-    //k = fwrite("\0",sizeof(unsigned char),1,ofptr);
-    k = fwrite("A",sizeof(unsigned char),1,ofptr);
-    //k = fwrite("\0",sizeof(unsigned char),1,ofptr);
-    k = fwrite("T",sizeof(unsigned char),1,ofptr);
-    k = fwrite(" ",sizeof(unsigned char),1,ofptr);
-    k = fwrite("O",sizeof(unsigned char),1,ofptr);
-    k = fwrite("N",sizeof(unsigned char),1,ofptr);
-    k = fwrite(" ",sizeof(unsigned char),1,ofptr);
-    k = fwrite("A",sizeof(unsigned char),1,ofptr);
-    k = fwrite(" ",sizeof(unsigned char),1,ofptr);
+    k = fwrite("B",sizeof(unsigned char),1,ofptr);
     k = fwrite("C",sizeof(unsigned char),1,ofptr);
-    k = fwrite("A",sizeof(unsigned char),1,ofptr);
-    k = fwrite("R",sizeof(unsigned char),1,ofptr);
+    // k = fwrite(" ",sizeof(unsigned char),1,ofptr);
+    // k = fwrite("R",sizeof(unsigned char),1,ofptr);
+    // k = fwrite("A",sizeof(unsigned char),1,ofptr);
+    // k = fwrite("T",sizeof(unsigned char),1,ofptr);
+    // k = fwrite(" ",sizeof(unsigned char),1,ofptr);
+    // k = fwrite("S",sizeof(unsigned char),1,ofptr);
+    // //k = fwrite("\0",sizeof(unsigned char),1,ofptr);
+    // k = fwrite("A",sizeof(unsigned char),1,ofptr);
+    // //k = fwrite("\0",sizeof(unsigned char),1,ofptr);
+    // k = fwrite("T",sizeof(unsigned char),1,ofptr);
+    // k = fwrite(" ",sizeof(unsigned char),1,ofptr);
+    // k = fwrite("O",sizeof(unsigned char),1,ofptr);
+    // k = fwrite("N",sizeof(unsigned char),1,ofptr);
+    // k = fwrite(" ",sizeof(unsigned char),1,ofptr);
+    // k = fwrite("A",sizeof(unsigned char),1,ofptr);
+    // k = fwrite(" ",sizeof(unsigned char),1,ofptr);
+    // k = fwrite("C",sizeof(unsigned char),1,ofptr);
+    // k = fwrite("A",sizeof(unsigned char),1,ofptr);
+    // k = fwrite("R",sizeof(unsigned char),1,ofptr);
 
 
     // int aCount = 5, xCount = 4, bCount = 3, lCount = 7, mCount = 2;

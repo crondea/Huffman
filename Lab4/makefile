@@ -8,7 +8,7 @@
 comp = gcc
 comp_flags = -g -Wall
 comp_libs = -lm
-OBJECTS = prog filegen
+OBJECTS = prog filegen dump
 #  -> Add these to OBJECTS if adding the helper functions back in below
 
 all: $(OBJECTS)
@@ -18,6 +18,9 @@ prog: Lab4main.c list.c
 
 filegen: fileGen.c
 	$(comp) $(comp_flags) fileGen.c -o filegen
+
+dump: byteDump.c
+	$(comp) $(comp_flags) byteDump.c -o dump
 
 clean:
 	rm -f $(OBJECTS) *.o core*

@@ -5,6 +5,10 @@
  * 
  */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 // Below are the structure definitions as well as the function definitions
 // for the linked list
 typedef struct listNodeTag
@@ -32,7 +36,7 @@ void treeDestruct(listRoot *treeHeader);
 void printList(listNode *node);
 void printTree(listRoot *tree);
 void printTreeAux(listNode *node, int level);
-void printCode(listNode *node, int level, int binary, char*code);
+//void printCode(listNode *node, int level, int binary, char*code);
 unsigned short int findFrequencies(unsigned char *data, int size ,int index);
 void findLeaf(listNode *node, int level, unsigned char **code, unsigned char symbol);
 void findCode(listNode *node, int level, unsigned char **code);
