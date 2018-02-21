@@ -126,54 +126,64 @@ int main(int argc, char *argv[])
 
         if(bufferIndex >= codeLen - 1)
         {
-            //printf("%d\n",atoi((char *)code));
-            code = code << ((bufferIndex - codeLen) + 1);
-            //printf("%X\n\n",*code);
-            buffer |= code;
+            buffer |= code << ((bufferIndex - codeLen) + 1);
             bufferIndex -= codeLen;
-
             // if the buffer is full, write, reset
             if(bufferIndex == -1)
             {
                 fwrite(&buffer,sizeof(unsigned char),1,outptr1); // write 16 bits at a time
-                //buffer2 = buffer >> 8;
-                //fwrite(&buffer,sizeof(unsigned char),1,outptr1);
-                //fwrite(&buffer2,sizeof(unsigned char),1,outptr1);
                 buffer = 0;
-                //buffer2 = 0;
                 bufferIndex = BUFFERSIZE;
             }
         }
         else
         {
             // save what we can in the buffer
-            //extraBits = (unsigned char *)calloc(1,codeLen);
-            //extraBits = (unsigned char *)strcpy((char *)extraBits,(char *)codes[fileChar]);
             bitsLen = bufferIndex + 1;
-
             // get the bits that we can't fit
-            //code = code >> (codeLen - bitsLen);
-            //buffer |= code;
-            // use line below instead of 2 above
             buffer |= code >> (codeLen - bitsLen);
-
             // write the full buffer
-            //buffer2 = buffer >> 8;
-            //fwrite(&buffer,sizeof(unsigned char),1,outptr1);
-            //fwrite(&buffer2,sizeof(unsigned char),1,outptr1);
             fwrite(&buffer,sizeof(unsigned char),1,outptr1);
             // reset buffer
             buffer = 0;
-            //buffer2  = 0;
             bufferIndex = BUFFERSIZE;
             // add remaining bits to the buffer
-            //free(extraBits);
-            code = codes[fileChar];
-            buffer |= code << ((bufferIndex + 1) - (codeLen - bitsLen));
-            bufferIndex -= codeLen - bitsLen;
+
+            //code = codes[fileChar]; // reset code for character
+            //buffer |= code << ((bufferIndex + 1) - (codeLen - bitsLen));
+            //bufferIndex -= codeLen - bitsLen;
+            codeLen -= bitsLen;
+            if(bufferIndex >= codeLen - 1)
+            {
+                buffer |= code << ((bufferIndex - codeLen) + 1);
+                bufferIndex -= codeLen;
+                // if the buffer is full, write, reset
+                if(bufferIndex == -1)
+                {
+                    fwrite(&buffer,sizeof(unsigned char),1,outptr1); // write 16 bits at a time
+                    buffer = 0;
+                    bufferIndex = BUFFERSIZE;
+                }
+            }
+            else
+            {
+                // save what we can in the buffer
+                bitsLen = bufferIndex + 1;
+                // get the bits that we can't fit
+                buffer |= code >> (codeLen - bitsLen);
+                // write the full buffer
+                fwrite(&buffer,sizeof(unsigned char),1,outptr1);
+                // reset buffer
+                buffer = 0;
+                bufferIndex = BUFFERSIZE;
+                // add remaining bits to the buffer
+                //code = codes[fileChar];
+                buffer |= code << ((bufferIndex + 1) - (codeLen - bitsLen));
+                bufferIndex -= codeLen - bitsLen;
+            }
+
         }
-        
-        //free(code);
+
     }
 
     if (bufferIndex != BUFFERSIZE) fwrite(&buffer,sizeof(unsigned short int),1,outptr1);
