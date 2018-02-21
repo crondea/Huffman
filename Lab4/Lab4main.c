@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
         {
             findLeaf(list->head,0,&codes[i],i,&lengths[i]);
             //findLeaf(list->head,0,&codes[i],i);
-            printf("%c: %X\tfreq: %d\tlen: %d\n",i,codes[i],frequencies[i],lengths[i]);
+            //printf("%c: %X\tfreq: %d\tlen: %d\n",i,codes[i],frequencies[i],lengths[i]);
         }
     }
 
