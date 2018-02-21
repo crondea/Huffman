@@ -1,7 +1,7 @@
 /*  Corey Rondeau and Caroline Hester
  *  ECE 4680 Lab 4
- *  File Created: Jan. 31 2018
- *  File Name: binaryTree.c
+ *  File Created: Feb. 13 2018
+ *  File Name: functions.h
  * 
  */
 
@@ -33,6 +33,9 @@ void printList(listNode *node);
 void printTree(listRoot *tree);
 void printTreeAux(listNode *node, int level);
 void printCode(listNode *node, int level, int binary, char*code);
+unsigned short int findFrequencies(unsigned char *data, int size ,int index);
+void findLeaf(listNode *node, int level, unsigned char **code, unsigned char symbol);
+void findCode(listNode *node, int level, unsigned char **code);
 
 
 
@@ -58,7 +61,6 @@ void printCode(listNode *node, int level, int binary, char*code);
 // void insertTree(treeRoot *head, treeNode *newNode);
 // void removeTree(treeRoot *head);
 // void freeTree(treeRoot *head);
-unsigned short int findFrequencies(unsigned char *data, int size ,int index);
 // void nodeCreate(unsigned short int frequency, unsigned char symbol, treeRoot *head);
 // void printTree(treeNode *head);
 // void printTreeAux(treeNode *currNode);

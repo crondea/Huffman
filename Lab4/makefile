@@ -1,6 +1,6 @@
 # Corey Rondeau
 # ECE 4680 Lab 4
-# Feb. 1, 2018
+# Feb. 13, 2018
 #
 # The purpose of this file is to build my solution including helper programs as well as the 
 # main compression file. For submission, the helper programs will be commented out.
@@ -13,8 +13,8 @@ OBJECTS = prog filegen
 
 all: $(OBJECTS)
 
-prog: Lab4main.c tree.c list.c
-	$(comp) $(comp_flags) list.c tree.c Lab4main.c -o prog
+prog: Lab4main.c list.c
+	$(comp) $(comp_flags) list.c Lab4main.c -o prog
 
 filegen: fileGen.c
 	$(comp) $(comp_flags) fileGen.c -o filegen

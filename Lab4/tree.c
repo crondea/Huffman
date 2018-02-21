@@ -56,21 +56,12 @@
 
 // }
 
-unsigned short int findFrequencies(unsigned char *data, int size, int index)
-{
-    int count = 0;
-    int i;
-
-    for(i = 0; i < size; i++)
-    {
-        if((int)data[i] == index) count++;
-    }
-    return count;
-}
 
 // void nodeCreate(unsigned short int frequency, unsigned char symbol, treeRoot *head)
 // {
-//     treeNode *newNode = (treeNode *)malloc(sizeof(treeNode));
+//     treeNode *newNode = (t
+
+//reeNode *)malloc(sizeof(treeNode));
 //     newNode->rightNode = NULL;
 //     newNode->leftNode = NULL;
 //     newNode->symbol = symbol;
