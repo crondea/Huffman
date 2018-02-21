@@ -255,28 +255,28 @@ void printCode(listNode *node, int level, int binary, char*code)
     }
 }
 
-void findLeaf(listNode *node, int level, unsigned char *code)
+void findLeaf(listNode *node, int level, unsigned char **code, unsigned char symbol)
 {
-    if(node->symbol)
+    if(node->symbol == symbol)
     {
         findCode(node,level,code);
-        printf("code: %s\n",code);
+        //printf("code: %s\n",code);
         return;
     }
 
-    findLeaf(node->right,level+1,code);
-    findLeaf(node->left,level+1,code);
+    findLeaf(node->right,level+1,code,symbol);
+    findLeaf(node->left,level+1,code,symbol);
 
 }
 
-void findCode(listNode *node, int level, unsigned char *code)
+void findCode(listNode *node, int level, unsigned char **code)
 {
     if(node->symbol)
     {
         int i;
         listNode *parent, *current;
 
-        code = (unsigned char *)calloc(1,(level+1)*sizeof(unsigned char));
+        *code = (unsigned char *)calloc(1,(level+1)*sizeof(unsigned char));
         current = node;
         for(i = level-1;i>=0;i--)
         {
@@ -285,22 +285,17 @@ void findCode(listNode *node, int level, unsigned char *code)
             {
                 if (parent->right == current)
                 {
-                    code[i] = '1';
-                    printf("%c",code[i]);
+                    code[0][i] = '1';
                 }
                 else 
                 {
-                    code[i] = '0';
-                    printf("%c",code[i]);
+                    code[0][i] = '0';
                 }
             }
-            printf("\n");
-            printf("c:%s\n",code);
             current = current->parent;
         }
+        printf("code: %s\n",*code);
     }
-
-
 }
 
 /*  The purpose of this function is to cycle through the array containing the file data
