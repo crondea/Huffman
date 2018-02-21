@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "functions.h"
 
@@ -69,24 +70,35 @@ int main(int argc, char *argv[])
             node->frequency = frequencies[i];
             node->symbol = (unsigned char)i;
             listInsertSorted(list,node);
-            printList(list->head);
+            //printList(list->head);
         }
     }
     // Turn the list into the Huffman tree
     while(list->listSize > 1)
     {
         combineFirstTwo(list);
-        printList(list->head);
+        //printList(list->head);
     }
 
-    printf("\n\n");
-    printTree(list);
-    i = 65;
-    findLeaf(list->head,0,codes[i]);
-    printf("\n\n");
-    printf("A: %s\n",codes[i]);
-    // Compression -----------------------------------------------------------
+    //printf("\n\n");
+    //printTree(list);
+
+    for (i=0;i<256;i++)
+    {
+        if (frequencies[i]>0)
+        {
+            findLeaf(list->head,0,&codes[i],i);
+            //printf("%d %c: %s f:%d\n",i,i,codes[i],frequencies[i]);
+        }
+    }
+
     
+    // Compression -----------------------------------------------------------
+
+    for (i=0;i<fileSize;i++)
+    {
+        fwrite(codes[fileData[i]],strlen((const char *)codes[fileData[i]])*sizeof(unsigned char),1,outptr1);
+    }    
 
     // Decompression ---------------------------------------------------------
 

@@ -255,28 +255,34 @@ void printCode(listNode *node, int level, int binary, char*code)
     }
 }
 
-void findLeaf(listNode *node, int level, unsigned char *code)
+void findLeaf(listNode *node, int level, unsigned char **code, unsigned char symbol)
 {
-    if(node->symbol)
+    if (node)
     {
-        findCode(node,level,code);
-        printf("code: %s\n",code);
-        return;
+        if(node->symbol == symbol && node->left == NULL)
+        {
+            findCode(node,level,code);
+            //printf("code: %s\n",*code);
+            return;
+        }
     }
-
-    findLeaf(node->right,level+1,code);
-    findLeaf(node->left,level+1,code);
+    if (node)
+    {
+        findLeaf(node->right,level+1,code,symbol);
+        findLeaf(node->left,level+1,code,symbol);
+    }
+    
 
 }
 
-void findCode(listNode *node, int level, unsigned char *code)
+void findCode(listNode *node, int level, unsigned char **code)
 {
-    if(node->symbol)
-    {
+    //if(node->symbol)
+    //{
         int i;
         listNode *parent, *current;
 
-        code = (unsigned char *)calloc(1,(level+1)*sizeof(unsigned char));
+        *code = (unsigned char *)calloc(1,(level+1)*sizeof(unsigned char));
         current = node;
         for(i = level-1;i>=0;i--)
         {
@@ -285,20 +291,20 @@ void findCode(listNode *node, int level, unsigned char *code)
             {
                 if (parent->right == current)
                 {
-                    code[i] = '1';
-                    printf("%c",code[i]);
+                    code[0][i] = '1';
+                    //printf("%c",code[0][i]);
                 }
                 else 
                 {
-                    code[i] = '0';
-                    printf("%c",code[i]);
+                    code[0][i] = '0';
+                    //printf("%c",code[0][i]);
                 }
             }
-            printf("\n");
-            printf("c:%s\n",code);
+            //printf("\n");
+            //printf("c:%s\n",*code);
             current = current->parent;
         }
-    }
+    //}
 
 
 }

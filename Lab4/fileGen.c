@@ -31,7 +31,9 @@ int main(int argc, char *argv[])
     k = fwrite("T",sizeof(unsigned char),1,ofptr);
     k = fwrite(" ",sizeof(unsigned char),1,ofptr);
     k = fwrite("S",sizeof(unsigned char),1,ofptr);
+    //k = fwrite("\0",sizeof(unsigned char),1,ofptr);
     k = fwrite("A",sizeof(unsigned char),1,ofptr);
+    //k = fwrite("\0",sizeof(unsigned char),1,ofptr);
     k = fwrite("T",sizeof(unsigned char),1,ofptr);
     k = fwrite(" ",sizeof(unsigned char),1,ofptr);
     k = fwrite("O",sizeof(unsigned char),1,ofptr);
