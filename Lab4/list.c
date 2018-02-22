@@ -316,7 +316,7 @@ void findCode(listNode *node, int level, unsigned short int *code, unsigned char
  *  and increment a counter every time the given index(character/symbol) is found. This
  *  count is returned as the frequency of the given symbol.
  */
-unsigned short int findFrequencies(unsigned char *data, int size, int index)
+int findFrequencies(unsigned char *data, int size, int index)
 {
     int count = 0, i;
     for(i = 0; i < size; i++) if((int)data[i] == index) count++;
