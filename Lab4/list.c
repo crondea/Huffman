@@ -177,7 +177,28 @@ listNode *listRemove(listRoot *treeHeader)
  */
 void dataDestruct(listRoot *treeHeader)
 {
+    dataDestructAux(treeHeader->head,0);
+    free(treeHeader);
+}
 
+
+void dataDestructAux(listNode *node, int level)
+{
+    //int i;
+    // This is our base case
+    if(node == NULL) return;
+    listNode *left;
+    // Traverse to the right (go down a level)
+    dataDestructAux(node->right,level+1);
+    // Print space based on the level to give the form of a tree
+    //for(i = 0; i < level; i++) printf("        ");
+    // Print the values of the node
+    //printf("(%d %c)\n",node->frequency,node->symbol);
+    left = node->left;
+    free(node);
+
+    // Travers to the left (go down a level)
+    dataDestructAux(left,level+1);
 }
 
 /*  The purpose of this function is to print the list nodes' symbols and their frequencies.

@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     unsigned short int codes[256];
     unsigned short int lengths[256];
     
-    for(i = 0; i < 255; i++)
+    for(i = 0; i < 256; i++)
     {
         frequencies[i] = 0;
     }
@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
     // We send the data and the index to a function to count the number of times this index
     // (or ASCI value) occurs in the data.
     // We also need to allocate a new node for every entry in the frequencies array that is > 0
-    for(i = 0; i < 255; i++)
+    for(i = 0; i < 256; i++)
     {
         codes[i] = 0;
         lengths[i] = 0;
@@ -201,7 +201,7 @@ int main(int argc, char *argv[])
     }
 
     // Now we will remake the tree as we did during compression
-    for(i = 0; i < 255; i++)
+    for(i = 0; i < 256; i++)
     {
         if(frequencies2[i] > 0)
         {
@@ -225,12 +225,50 @@ int main(int argc, char *argv[])
     dataSize = (fileSize2 - FILE_HEADER_SIZE);
     fileData2 = (unsigned char *)calloc(dataSize,sizeof(unsigned char));
     fread(fileData2,sizeof(unsigned char),dataSize,inptr2);
+    unsigned char currentByte;
+    int shiftIndex;
+    listNode *rover;
+    rover = list2->head;
 
     for(i = 0; i < dataSize; i++)
     {
-
+        for(shiftIndex=BUFFERSIZE;shiftIndex>=0;shiftIndex--)
+        {
+            currentByte = fileData2[i];
+            currentByte = currentByte >> shiftIndex;
+            currentByte &= 0x01;
+            if (currentByte == 0x01)
+            {
+                rover = rover->right;
+            }
+            else
+            {
+                rover = rover->left;
+            }
+            if (rover->right == NULL && rover->right == NULL)
+            {
+                fwrite(&rover->symbol,sizeof(unsigned char),1,outptr2);
+                rover = list2->head;
+                byteCount++;  
+                if (byteCount==origFileSize)
+                {
+                    break;
+                }  
+            }
+            
+        }
+        if (byteCount==origFileSize)
+        {
+            break;
+        }
 
     }
+    dataDestruct(list);
+    dataDestruct(list2);
+    free(fileData);
+    free(fileData2);
+    fclose(outptr2);
+    fclose(inptr2);
 
     return 0;
 }
