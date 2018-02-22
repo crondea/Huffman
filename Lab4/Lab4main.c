@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 
 
     // Array to store character frequencies
-    unsigned short int frequencies[256];
+    int frequencies[256];
     //unsigned char *codes[256];
     unsigned short int codes[256];
     unsigned short int lengths[256];
@@ -96,8 +96,10 @@ int main(int argc, char *argv[])
     //printf("\n\n");
     //printTree(list);
 
+    //fwrite(&fileSize,sizeof(int),1,outptr1);
+
     for (i=0;i<256;i++)
-    {
+    {   //fwrite(&frequencies[i],sizeof(int),1,outptr1);
         if (frequencies[i]>0)
         {
             findLeaf(list->head,0,&codes[i],i,&lengths[i]);
@@ -108,6 +110,10 @@ int main(int argc, char *argv[])
 
 
     // Compression -----------------------------------------------------------
+    // write size of filedata, then frequencies table
+    
+
+
     unsigned char fileChar = 0;
     //unsigned char *code;
     //unsigned char *extraBits;
