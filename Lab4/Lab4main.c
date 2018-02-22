@@ -7,12 +7,11 @@
 
 
 #include "functions.h"
-#define BUFFERSIZE 7
 
 int main(int argc, char *argv[])
 {
     FILE *inptr1 = NULL;
-    //FILE *inptr2 = NULL;
+    FILE *inptr2 = NULL;
     FILE *outptr1 = NULL;
     FILE *outptr2 = NULL;
     int fileSize;
@@ -48,11 +47,6 @@ int main(int argc, char *argv[])
         printf("Error opening compression output file\n");
         exit(-1);
     }
-    if(!(outptr2 = fopen("Broke_compressed","wb")))
-    {
-        printf("Error opening broke output file\n");
-        exit(-1);
-    }
 
     // Getting the size in bytes of the file
     fseek(inptr1, 0, SEEK_END);
@@ -83,52 +77,34 @@ int main(int argc, char *argv[])
             node->frequency = frequencies[i];
             node->symbol = (unsigned char)i;
             listInsertSorted(list,node);
-            //printList(list->head);
         }
     }
     // Turn the list into the Huffman tree
     while(list->listSize > 1)
     {
         combineFirstTwo(list);
-        //printList(list->head);
     }
-
-    //printf("\n\n");
-    //printTree(list);
-
-    //fwrite(&fileSize,sizeof(int),1,outptr1);
-
+    
+    fwrite(&fileSize,sizeof(int),1,outptr1);
     for (i=0;i<256;i++)
-    {   //fwrite(&frequencies[i],sizeof(int),1,outptr1);
+    {   
+        fwrite(&frequencies[i],sizeof(int),1,outptr1);
         if (frequencies[i]>0)
         {
             findLeaf(list->head,0,&codes[i],i,&lengths[i]);
-            //findLeaf(list->head,0,&codes[i],i);
-            //printf("%c: %X\tfreq: %d\tlen: %d\n",i,codes[i],frequencies[i],lengths[i]);
         }
     }
 
-
     // Compression -----------------------------------------------------------
     // write size of filedata, then frequencies table
-    
-
-
     unsigned char fileChar = 0;
-    //unsigned char *code;
-    //unsigned char *extraBits;
     unsigned short int code;
     int codeLen, bitsLen;
     for (i = 0; i < fileSize; i++)
     {
-        //fwrite(codes[fileData[i]],lengths[fileData[i]],1,outptr2);
         fileChar = fileData[i]; // character in file
-        //codeLen = strlen((const char *)codes[fileChar]);
         codeLen = lengths[fileChar];
-        //code = (unsigned char *)calloc(1,codeLen);
-        //code = (unsigned char *)strcpy((char *)code,(char *)codes[fileChar]);
         code = codes[fileChar];
-        //printf("%s, %X\n",codes[fileChar],(unsigned int)*codes[fileChar]);
 
         if(bufferIndex >= codeLen - 1)
         {
@@ -155,9 +131,6 @@ int main(int argc, char *argv[])
             bufferIndex = BUFFERSIZE;
             // add remaining bits to the buffer
 
-            //code = codes[fileChar]; // reset code for character
-            //buffer |= code << ((bufferIndex + 1) - (codeLen - bitsLen));
-            //bufferIndex -= codeLen - bitsLen;
             codeLen -= bitsLen;
             if(bufferIndex >= codeLen - 1)
             {
@@ -183,18 +156,81 @@ int main(int argc, char *argv[])
                 buffer = 0;
                 bufferIndex = BUFFERSIZE;
                 // add remaining bits to the buffer
-                //code = codes[fileChar];
                 buffer |= code << ((bufferIndex + 1) - (codeLen - bitsLen));
                 bufferIndex -= codeLen - bitsLen;
             }
-
         }
-
     }
 
-    if (bufferIndex != BUFFERSIZE) fwrite(&buffer,sizeof(unsigned short int),1,outptr1);
+    if (bufferIndex != BUFFERSIZE) fwrite(&buffer,sizeof(unsigned char),1,outptr1);
+
+    fclose(outptr1);
+    fclose(inptr1);
+
 
     // Decompression ---------------------------------------------------------
+
+    int fileSize2, origFileSize, dataSize;
+    int frequencies2[256];
+    int byteCount = 0;
+    unsigned char *fileData2;
+
+    listRoot *list2 = listConstruct();
+
+    if(!(inptr2 = fopen("compressed","rb")))
+    {
+        printf("Error opening compressed input file\n");
+        exit(-1);
+    }
+    if(!(outptr2 = fopen("decompressed","wb")))
+    {
+        printf("Error opening decompressed output file\n");
+        exit(-1);
+    }
+
+    // Getting the size in bytes of the file
+    fseek(inptr2, 0, SEEK_END);
+    fileSize2 = ftell(inptr2);
+    rewind(inptr2);
+
+    fread(&origFileSize,sizeof(int),1,inptr2);
+
+    for(i = 0; i < 256; i++)
+    {
+        fread(&frequencies2[i],sizeof(int),1,inptr2);
+    }
+
+    // Now we will remake the tree as we did during compression
+    for(i = 0; i < 255; i++)
+    {
+        if(frequencies2[i] > 0)
+        {
+            listNode *node = (listNode *)malloc(sizeof(listNode));
+            node->left = NULL;
+            node->right = NULL;
+            node->parent = NULL;
+            node->next = NULL;
+            node->prev = NULL;
+            node->frequency = frequencies2[i];
+            node->symbol = (unsigned char)i;
+            listInsertSorted(list2,node);
+        }
+    }
+    // Turn the list into the Huffman tree
+    while(list2->listSize > 1)
+    {
+        combineFirstTwo(list2);
+    }
+
+    dataSize = (fileSize2 - FILE_HEADER_SIZE);
+    fileData2 = (unsigned char *)calloc(dataSize,sizeof(unsigned char));
+    fread(fileData2,sizeof(unsigned char),dataSize,inptr2);
+
+    for(i = 0; i < dataSize; i++)
+    {
+
+
+    }
 
     return 0;
 }

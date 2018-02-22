@@ -9,6 +9,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+// This is the size of the buffer we are using to write the codes to the compressed file
+#define BUFFERSIZE 7
+
+// This is the header of the compressed file containing 4 bytes (int) of the original file size
+// followed by the 256 symbol frequencies (ints)
+#define FILE_HEADER_SIZE 1028
+
 // Below are the structure definitions as well as the function definitions
 // for the linked list
 typedef struct listNodeTag
