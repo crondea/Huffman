@@ -176,7 +176,7 @@ listNode *listRemove(listRoot *treeHeader)
  *  tree containing the nodes that were originally in a linked list.
  */
 void dataDestruct(listRoot *treeHeader)
-{
+{   
     dataDestructAux(treeHeader->head,0);
     free(treeHeader);
 }
@@ -184,19 +184,14 @@ void dataDestruct(listRoot *treeHeader)
 
 void dataDestructAux(listNode *node, int level)
 {
-    //int i;
     // This is our base case
     if(node == NULL) return;
     listNode *left;
     // Traverse to the right (go down a level)
     dataDestructAux(node->right,level+1);
-    // Print space based on the level to give the form of a tree
-    //for(i = 0; i < level; i++) printf("        ");
-    // Print the values of the node
-    //printf("(%d %c)\n",node->frequency,node->symbol);
     left = node->left;
+    // free node data
     free(node);
-
     // Travers to the left (go down a level)
     dataDestructAux(left,level+1);
 }
@@ -252,43 +247,21 @@ void printTreeAux(listNode *node, int level)
     printTreeAux(node->left,level+1);
 }
 
-
-// void printCode(listNode *node, int level, int binary, char*code)
-// {
-//     int i;
-//     if(node == NULL) return;
-//     code = (char *)realloc(code,(level+2)*sizeof(char));
-//     printCode(node->right,level+1,1,strcat(code,"1"));
-//     for(i = 0; i < level; i++) printf("    ");
-//     if(level != 0)
-//     {
-//         //printf("(%d %c)\n",node->frequency,node->symbol);
-//         printf("%d\n",binary);
-//     }
-//     char *newcode;
-//     newcode = (char *)calloc(1,(level+2)*sizeof(char));
-//     free(code);
-//     code = newcode;
-//     printCode(node->left,level+1,0,strcat(code,"0"));
-//     if (node->symbol)
-//     {
-//         printf("%c: %s\n",node->symbol,code);
-//     }
-// }
-
+/*  The purpose of this function is to go to the right and left of each node until a leaf node
+*   is found. This is a recursive function and calls a code function when a leaf node is found.
+*/
 void findLeaf(listNode *node, int level, unsigned short int *code, unsigned char symbol, unsigned short int *lengths)
 {
     if (node)
-    {
+    {   // ensure the desired leaf node was found
         if(node->symbol == symbol && node->left == NULL)
         {
             findCode(node,level,code,symbol,lengths);
-            //printf("code: %s\n",*code);
             return;
         }
     }
     if (node)
-    {
+    {   // if node is not NULL, go to the right and left
         findLeaf(node->right,level+1,code,symbol,lengths);
         findLeaf(node->left,level+1,code,symbol,lengths);
     }
@@ -296,39 +269,33 @@ void findLeaf(listNode *node, int level, unsigned short int *code, unsigned char
 
 }
 
+/*  The purpose of this function is to start from the leaf node and step back up to the parent, recording the steps taken
+*   in the code value. The step value is shifted to the left by the number of levels it has moved up from the leaf node.
+*/
 void findCode(listNode *node, int level, unsigned short int *code, unsigned char symbol, unsigned short int *lengths)
 {
-    //if(node->symbol)
-    //{
         int i;
         listNode *parent, *current;
 
-        //*code = (unsigned char *)calloc(1,(level+1)*sizeof(unsigned char));
-        current = node;
-        *lengths = level;
-        for(i = 0;i<=level-1;i++) // changed from i=level-1;i>=0;i--
-        {
+        current = node; // start at leaf node
+        *lengths = level; // length of code will be the same as the number of levels down the leaf node is
+        for(i = 0;i<=level-1;i++)
+        {   // find parent node
             parent = current->parent;
             if (parent != NULL)
-            {
+            {   // if the leaf node came from the right of the parent
                 if (parent->right == current)
                 {
                     *code |= 0x01 << i;
-                    //code[0][i] = '1';
-                    //printf("%c",code[0][i]);
                 }
                 else 
-                {
+                {   // if the leaf node came from the left of the parent
                     *code |= 0x00 << i;
-                    //code[0][i] = '0';
-                    //printf("%c",code[0][i]);
                 }
             }
-            //printf("\n");
-            //printf("c:%s\n",*code);
+            // move up tree to the head to find full code for character (leaf node)
             current = current->parent;
         }
-    //}
 
 
 }
